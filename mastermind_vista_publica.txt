@@ -1,0 +1,50 @@
+@startuml
+
+class Mastermind {
+   + play()
+   
+}
+
+Mastermind *--> "10" Attempt
+
+Mastermind *--> SecretCombination
+
+abstract class Combination {
+   
+  + show();
+}
+class SecretCombination {
+   + generate()
+   + show()
+   + get(): String
+   + showResult(proposedCombination)
+   + match(proposedCombination): boolean
+}
+SecretCombination ..> Console
+Combination ..> Console
+
+class ProposedCombination {
+   + input(): boolean
+   + show()
+}
+
+ProposedCombination ..> Console
+
+Combination <|-- SecretCombination
+Combination <|-- ProposedCombination
+
+class Attempt {
+   + play()
+   + winner(): boolean
+   + showHead()
+   + showResult()
+}
+
+Attempt *--> ProposedCombination
+Attempt ..> Console
+Attempt --> SecretCombination
+
+class Console {
+}
+
+@enduml

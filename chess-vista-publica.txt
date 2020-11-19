@@ -1,0 +1,48 @@
+@startuml
+
+class Chess {
+   -turn
+   +play()
+}
+
+class Board {
+  +initialize()
+  +show()
+}
+class Player {
+   +play()
+}
+class Square {
+  -row
+  -column
+  +put(piece)
+  +getPiece()
+}
+abstract class Piece {
+  -character
+  +show()
+  +validate(movement)
+}
+class Movement {
+  -originSquare
+  -targetSquare
+  -characterPiece  
+  +input()
+}
+
+Chess *--> Board
+Chess *--> "2" Player
+Chess *--> "32" Piece
+Board --> "32" Piece
+Board *--> "64" Square
+Player --> "16" Piece
+Player ..> Square
+Player ..> Movement
+Square --> Piece
+
+Piece <|-- King
+Piece <|-- Queen
+Piece <|-- Tower
+Piece <|-- Horse
+
+@enduml
