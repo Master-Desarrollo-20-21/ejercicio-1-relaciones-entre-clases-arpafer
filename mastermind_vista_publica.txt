@@ -24,11 +24,12 @@ SecretCombination ..> Console
 Combination ..> Console
 
 class ProposedCombination {
-   + input(): boolean
+   + read(): boolean
    + show()
 }
 
 ProposedCombination ..> Console
+SecretCombination ..> ProposedCombination
 
 Combination <|-- SecretCombination
 Combination <|-- ProposedCombination

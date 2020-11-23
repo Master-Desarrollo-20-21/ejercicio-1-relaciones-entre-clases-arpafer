@@ -1,0 +1,93 @@
+@startuml
+
+class Chess {
+   -turn
+   +play()
+}
+
+class Board {
+  +initialize()
+  +show()
+  +String[] getWhitePiecesNames()
+  +String[] getBlackPieceNames()
+  +String[] getColsIndex()
+  +play(player)
+  +Square getSquare(row, column)
+  +Square getSquare(piece)
+  +Piece getPieceByName(name)
+  +String getColumnName(int index)
+  +int getColumnIndex(String column)
+  +boolean hasWinner()
+}
+class Player {
+   +getColor()
+   +Movement readMovement(Board board)
+}
+Player ..> Board
+class Square {
+  -row
+  -column
+  +put(piece)
+  +boolean has(Piece piece)
+  +show()
+  +int distanceRow(Square target)
+  +int distanceColumn(Square target)
+  +int getColumnIndex(Square square)
+  +boolean hasPieceDistinctColor(Color color)
+  +boolean hasAnyPiece()
+  +boolean hasPieceSameColor(Square square)
+  +movePiece(Square target)
+  +int columnToIndex()
+  +boolean hasDeadKing()
+}
+enum Color {
+}
+abstract class Piece {
+  -character
+  -color
+  +Piece(String visualCaracter, Color color)
+  +show()
+  +abstract boolean validate(Movement movement, Board board)
+  +set(String character, Color color)
+  +config(String visualCaracter, Color color)
+  +perform(Movement movement, Board board)
+  +boolean canEat(Movement movement)
+  
+}
+Piece *--> Color
+class Movement {
+  -Square origin
+  -Square target
+  -Piece piece
+  +Piece getPiece()
+  +Square getOrigin()
+  +Square getTarget()
+  +read(String[] piecesNames, Board board)
+  +setOrigin(Square square)
+  +setTarget(Square square)
+  +perform(Board board)
+  +boolean valid(Board board)
+  +boolean hasPiece()
+  
+}
+
+Chess *--> Board
+Chess *--> "2" Player
+Chess *--> "32" Piece
+Board ..> "32" Piece
+Board *--> "64" Square
+Player ..> Movement
+Square --> Piece
+Movement --> Piece
+Piece ..> Movement
+Piece ..> Board
+
+Piece <|-- King
+Piece <|-- Queen
+Piece <|-- Tower
+Piece <|-- Horse
+Piece <|-- Bishop
+Piece <|-- Pawn
+
+
+@enduml
