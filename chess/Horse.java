@@ -9,19 +9,19 @@ public class Horse extends Piece {
     @Override
     public boolean validate(Movement movement, Board board) {
 
-        if ((this.validMovement(movement) && !this.hasObstacles(movement)) || this.canEat(movement)) {
+        if ((this.validMovement(movement, board) && !this.hasObstacles(movement)) || this.canEat(movement)) {
             return true;
         } else {
             return false;
         }
     }
 
-    private boolean validMovement(Movement movement) {
+    private boolean validMovement(Movement movement, Board board) {
 
         Square origin = movement.getOrigin();
         Square target = movement.getTarget();
         int distanceRow = origin.distanceRow(target);
-        int distanceColumn = origin.distanceColumn(target);
+        int distanceColumn = origin.distanceColumn(target, board);
         return (Math.abs(distanceRow) == 2 && Math.abs(distanceColumn) == 1) || (Math.abs(distanceRow) == 1 && Math.abs(distanceColumn) == 2);                        
     }
 

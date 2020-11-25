@@ -44,16 +44,16 @@ public class Square {
         return target.getRow() - this.row;
     }
 
-    int distanceColumn(Square target) {
+    int distanceColumn(Square target, Board board) {
 
-        int indexColumn = this.getColumnIndex(this);
-        int indexColumnTarget = this.getColumnIndex(target);
+        int indexColumn = this.getColumnIndex(this, board);
+        int indexColumnTarget = this.getColumnIndex(target, board);
         return indexColumnTarget - indexColumn;
     }
 
-    private int getColumnIndex(Square square) {
+    private int getColumnIndex(Square square, Board board) {
         int index = 0;
-        for (String column : Board.getColumnsIndex()) {
+        for (String column : board.getColumnsIndex()) {
             if (square.getColumn().equals(column)) {
                 return index;
             }
@@ -143,9 +143,9 @@ public class Square {
         }
     }   
 
-    int columnToIndex() {
+    int columnToIndex(Board board) {
        int index = 0;
-        for (String column : Board.getColumnsIndex()) {
+        for (String column : board.getColumnsIndex()) {
             if (this.column.equals(column)) {
                 return index + 1;
             }

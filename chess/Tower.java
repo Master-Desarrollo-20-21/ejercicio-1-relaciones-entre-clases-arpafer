@@ -8,18 +8,18 @@ public class Tower extends Piece {
 
     @Override
     public boolean validate(Movement movement, Board board) {
-        if ((this.validMovement(movement) && !this.hasObstacles(movement, board)) || this.canEat(movement)) {
+        if ((this.validMovement(movement, board) && !this.hasObstacles(movement, board)) || this.canEat(movement)) {
             return true;
         } else {
             return false;
         }
     }
 
-    private boolean validMovement(Movement movement) {
+    private boolean validMovement(Movement movement, Board board) {
         Square origin = movement.getOrigin();
         Square target = movement.getTarget();
         int distanceRow = origin.distanceRow(target);
-        int distanceColumn = origin.distanceColumn(target);
+        int distanceColumn = origin.distanceColumn(target, board);
         return (distanceRow == 0 && Math.abs(distanceColumn) > 0) || (Math.abs(distanceRow) > 0 && distanceColumn == 0);
     }
 
@@ -27,7 +27,7 @@ public class Tower extends Piece {
         Square origin = movement.getOrigin();
         Square target = movement.getTarget();
         int distanceRow = origin.distanceRow(target);
-        int distanceColumn = origin.distanceColumn(target);
+        int distanceColumn = origin.distanceColumn(target, board);
         int distance = this.getDistance(distanceRow, distanceColumn);
         int incrementRow = this.getIncrement(distanceRow);
         int incrementColumn = this.getIncrement(distanceColumn);

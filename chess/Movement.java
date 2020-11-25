@@ -41,7 +41,7 @@ public class Movement {
 
         String pieceName = this.capturePiece(piecesNames);
         byte row = this.captureRow();
-        String column = this.captureColumn();
+        String column = this.captureColumn(board);
 
         this.piece = (Piece) (board.getPieceByName(pieceName));
         this.origin = board.getSquare(piece);
@@ -87,19 +87,19 @@ public class Movement {
         return row;
     }
 
-    private String captureColumn() {
+    private String captureColumn(Board board) {
         GestorIO gestor = new GestorIO();
         String column = "a";
         do {
             gestor.out("Columna destino: ");
             column = gestor.inString();
-        } while (!this.validColumn(column));
+        } while (!this.validColumn(column, board));
         return column;
     }
 
-    private boolean validColumn(String column) {
+    private boolean validColumn(String column, Board board) {
         assert (column != null);
-        for (String c : Board.getColumnsIndex()) {
+        for (String c : board.getColumnsIndex()) {
             if (column.equals(c)) {
                 return true;
             }

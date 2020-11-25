@@ -12,7 +12,7 @@ public class Pawn extends Piece {
     @Override
     public boolean validate(Movement movement, Board board) {
 
-        if ((this.validMovement(movement) && !this.hasObstacles(movement, board)) || this.canEat(movement)) {
+        if ((this.validMovement(movement, board) && !this.hasObstacles(movement, board)) || this.canEat(movement, board)) {
             return true;
         } else {
             return false;
@@ -24,21 +24,20 @@ public class Pawn extends Piece {
         super.perform(movement, board);
         this.firstMovement = false;
     }
-
-    @Override
-    protected boolean canEat(Movement movement) {
+    
+    protected boolean canEat(Movement movement, Board board) {
         Square origin = movement.getOrigin();
         Square target = movement.getTarget();
         int distanciaRow = Math.abs(origin.distanceRow(target));
-        int distanciaColumn = Math.abs(origin.distanceColumn(target));
+        int distanciaColumn = Math.abs(origin.distanceColumn(target, board));
         return distanciaRow == 1 && distanciaColumn == 1 && target.hasPieceDistinctColor(this.getColor());
     }
 
-    private boolean validMovement(Movement movement) {
+    private boolean validMovement(Movement movement, Board board) {
         Square origin = movement.getOrigin();
         Square target = movement.getTarget();
         int distanciaRow = Math.abs(origin.distanceRow(target));
-        return ((distanciaRow == 1) || (this.firstMovement && distanciaRow == 2)) && origin.distanceColumn(target) == 0;
+        return ((distanciaRow == 1) || (this.firstMovement && distanciaRow == 2)) && origin.distanceColumn(target, board) == 0;
     }
 
     private boolean hasObstacles(Movement movement, Board board) {

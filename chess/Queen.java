@@ -8,18 +8,18 @@ public class Queen extends Piece {
 
     @Override
     public boolean validate(Movement movement, Board board) {
-        if ((this.validMovement(movement) && !this.hasObstacles(movement, board)) || this.canEat(movement)) {
+        if ((this.validMovement(movement, board) && !this.hasObstacles(movement, board)) || this.canEat(movement)) {
             return true;
         } else {
             return false;
         }
     }
 
-    private boolean validMovement(Movement movement) {
+    private boolean validMovement(Movement movement, Board board) {
         Square origin = movement.getOrigin();
         Square target = movement.getTarget();
         int distanceRow = origin.distanceRow(target);
-        int distanceColumn = origin.distanceColumn(target);
+        int distanceColumn = origin.distanceColumn(target, board);
         boolean movementDiagonal = Math.abs(distanceRow) == Math.abs(distanceColumn);
         boolean movementVertical = Math.abs(distanceRow) > 0 && distanceColumn == 0;
         boolean movementHorizontal = distanceRow == 0 && Math.abs(distanceColumn) > 0;
@@ -30,7 +30,7 @@ public class Queen extends Piece {
         Square origin = movement.getOrigin();
         Square target = movement.getTarget();
         int distanceRow = origin.distanceRow(target);
-        int distanceColumn = origin.distanceColumn(target);
+        int distanceColumn = origin.distanceColumn(target, board);
         if (distanceRow != 0 && distanceColumn != 0) {
             return this.hasObstacleInDiagonal(movement, board);
         } else if (distanceRow != 0) {
@@ -44,13 +44,13 @@ public class Queen extends Piece {
         Square origin = movement.getOrigin();
         Square target = movement.getTarget();
         int distanceRow = origin.distanceRow(target);
-        int distanceColumn = origin.distanceColumn(target);
+        int distanceColumn = origin.distanceColumn(target, board);
         int incrementRow = this.getIncrement(distanceRow);
         int incrementColumn = this.getIncrement(distanceColumn);
         int i = incrementRow;
         int j = incrementColumn;
         while (Math.abs(i) <= Math.abs(distanceRow)) {
-            String columnName = board.getColumnName(origin.columnToIndex() + j);
+            String columnName = board.getColumnName(origin.columnToIndex(board) + j);
             Square nextSquare = board.getSquare(origin.getRow() + i, columnName);
             if (origin.hasPieceSameColor(nextSquare)) {
                 return true;
@@ -81,12 +81,12 @@ public class Queen extends Piece {
     private boolean hasObstacleInColumn(Movement movement, Board board) {
         Square origin = movement.getOrigin();
         Square target = movement.getTarget();
-        int distanceColumn = origin.distanceColumn(target);
+        int distanceColumn = origin.distanceColumn(target, board);
         int incrementColumn = this.getIncrement(distanceColumn);
         int i = 0;
         int j = incrementColumn;
         while (Math.abs(j) <= Math.abs(distanceColumn)) {
-            String columnName = board.getColumnName(origin.columnToIndex() + j);
+            String columnName = board.getColumnName(origin.columnToIndex(board) + j);
             Square nextSquare = board.getSquare(origin.getRow(), columnName);
             if (origin.hasPieceSameColor(nextSquare)) {
                 return true;

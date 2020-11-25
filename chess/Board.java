@@ -9,13 +9,13 @@ public class Board {
     private final int NUM_PIECES = 16;
 
     private Square[] squares;
-    private static String[] columnIndex = {"a", "b", "c", "d", "e", "f", "g", "h"};
-    private static String[] whites = {"P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "T1", "C1", "A1", "D", "R", "A2", "C2", "T2"};
-    private static String[] blacks = {"t1", "c1", "a1", "d", "r", "a2", "c2", "t2", "p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7"};
+    private String[] columnIndex = {"a", "b", "c", "d", "e", "f", "g", "h"};
+    private String[] whites = {"P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "T1", "C1", "A1", "D", "R", "A2", "C2", "T2"};
+    private String[] blacks = {"t1", "c1", "a1", "d", "r", "a2", "c2", "t2", "p0", "p1", "p2", "p3", "p4", "p5", "p6", "p7"};
     private HashMap hashPieces;
 
-    static String[] getColumnsIndex() {
-        return columnIndex;
+    String[] getColumnsIndex() {
+        return this.columnIndex;
     }
 
     String[] getWhitePieceNames() {
@@ -27,7 +27,7 @@ public class Board {
     }
 
     public String[] getColsIndex() {
-        return Board.columnIndex;
+        return this.columnIndex;
     }
 
     public Board(Piece[] pieces) {
@@ -43,7 +43,7 @@ public class Board {
         for (int i = 0; i < NUM_ROWS * NUM_COLUMNS; i++) {
             int row = i / NUM_COLUMNS;
             int c = i % NUM_COLUMNS;
-            this.squares[i] = new Square(row + 1, Board.columnIndex[c]);
+            this.squares[i] = new Square(row + 1, this.columnIndex[c]);
         }
         this.setBlackPieces();
         this.setWhitePieces();
@@ -114,7 +114,7 @@ public class Board {
     Square getSquare(int row, String column) {
 
         int i = 0;
-        for (String col : Board.columnIndex) {
+        for (String col : this.columnIndex) {
             if (col.equals(column)) {
                 break;
             }
