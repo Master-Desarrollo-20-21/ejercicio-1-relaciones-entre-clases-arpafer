@@ -44,30 +44,24 @@ public class Mastermind {
         } while (this.wantOtherGame());
     }
 
-    private void showHead() {
-        GestorIO console = new GestorIO();
-        console.out("----- M A S T E R M I N D -----\n\n");
+    private void showHead() {        
+        Message.MAIN_TITLE.writeln();
     }
     
     private boolean wantOtherGame() {
-        GestorIO console = new GestorIO();
-        console.out("¿RESUME? S/n");
-        String respond = console.inString();
-        if (respond.equals("S") || respond.equals("s"))
-            return true;
-        else 
-            return false;
+        RespondYesNo respond = new RespondYesNo();
+        return respond.read();
     }
 
     private void showResult(int numAttempt) {
-        GestorIO console = new GestorIO();
+        
         String result = "";
         if (attempts[numAttempt - 1].winner())
-            result = "won!!!";
+            result = Message.WON.toString();
         else
-            result = "lost. The combination is " + this.secretCombination.get() + " !!!";
-        
-        console.out("You've " + result + "\n");
+            result = Message.LOST + this.secretCombination.get() + Message.EXCLAMATION;
+                
+        Message.RESULT.writeln(result);
     }
 
     private void showAcumulatedResults(int numAttempt) {

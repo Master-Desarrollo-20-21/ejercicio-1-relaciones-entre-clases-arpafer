@@ -13,9 +13,7 @@ public class Attempt {
     private int index;
     private final SecretCombination secretCombination;    
     private final ProposedCombination proposedCombination;
-    
-    private final String ATTEMPT = "Attempt(s)";
-       
+               
     public Attempt(int index, SecretCombination secretCombination) {        
         this.index = index;
         this.secretCombination = secretCombination;
@@ -26,19 +24,20 @@ public class Attempt {
         return this.secretCombination.match(this.proposedCombination);
     }   
     public void play() {                       
-       while (!this.proposedCombination.input());
+       while (!this.proposedCombination.read()) {
+           
+       }
     }
 
-    public void showResult() {
-        GestorIO console = new GestorIO();
+    public void showResult() {        
         this.proposedCombination.show(); 
-        console.out(" --> "); 
+        Message.ARROW.write();
         this.secretCombination.showResult(this.proposedCombination);
     }
 
     public void showHead() {        
-        GestorIO console = new GestorIO();
-        console.out("\n" + this.index + " " + this.ATTEMPT + "\n");
+        
+        Message.ATTEMP.writeHeadAttempt(index);
         this.secretCombination.show();
     }
 }

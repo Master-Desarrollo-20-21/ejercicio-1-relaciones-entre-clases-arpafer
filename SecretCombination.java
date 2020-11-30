@@ -12,41 +12,35 @@ import java.util.Random;
  * @author Antonio
  */
 class SecretCombination extends Combination {
-
-    private final String HIDDEN_VIEW = "xxxx";
+    
     private final String[] colors = {"r", "b", "y", "g", "o", "p"};
     private final int MAX_SIZE_COMBINATION = 4;
 
-    void generate() {
-        this.combination = "";
+    void generate() {        
         Random r = new Random();
-        while (this.combination.length() < MAX_SIZE_COMBINATION) {
+        while (this.getCombination().length() < MAX_SIZE_COMBINATION) {
             int indexColor = r.nextInt(6);
-            if (!this.combination.contains(colors[indexColor]))
-               this.combination += colors[indexColor];
+            if (!this.getCombination().contains(colors[indexColor]))
+               this.addColor(colors[indexColor]);
         }
     }
     @Override
-    protected void show() {
-        GestorIO console = new GestorIO();
-        console.out(this.HIDDEN_VIEW + "\n");
-        //console.out(this.combination + "\n");
+    protected void show() {        
+        Message.HIDDEN_VIEW.writeln();        
     }    
     public String get() {
-        return this.combination;
+        return this.getCombination();
     }
 
     public void showResult(ProposedCombination proposedCombination) {
         int blacks = this.countHits(proposedCombination);
-        int whites = this.countMiddleHits(proposedCombination);
-        GestorIO console = new GestorIO();
-        console.out(blacks + " blacks and " + whites + " whites\n");
+        int whites = this.countMiddleHits(proposedCombination);        
+        Message.BLACKS_AND_WHITES.write(blacks, whites);
     }
 
     private boolean equalsCaracters(ProposedCombination proposedCombination, int i, int j) {
-        GestorIO console = new GestorIO();
-        // console.out(this.combination.substring(i, i + 1) + proposedCombination.combination.substring(j, j + 1) + " ");
-        return this.combination.substring(i, i + 1).equals(proposedCombination.combination.substring(j, j + 1));
+       
+        return this.getCombination().substring(i, i + 1).equals(proposedCombination.getCombination().substring(j, j + 1));
     }
 
     private int countHits(ProposedCombination proposedCombination) {

@@ -10,34 +10,28 @@ package mastermind;
  * @author Antonio
  */
 class ProposedCombination extends Combination {
-
-    private final String PROPOSE = "Propose a combination: ";
-    private final String WRONG_LENGTH = "Wrong proposed combination length";
-    private final String WRONG_COLORS = "Wrong colors, they must be: rbygop";
-    private final String VALID_COLORS = "rbygop";
-
+                
     private boolean valid;
 
     public ProposedCombination() {
         this.valid = true;
     }
 
-    boolean input() {
-        GestorIO console = new GestorIO();
-        console.out(this.PROPOSE);
-        this.combination = console.inString();
+    boolean read() {        
+        Message.PROPOSE.write();
+        super.readInput();
         this.valid = true;
-        if (this.combination.length() == 4) {
-            for (int i = 0; i < this.combination.length(); i++) {
-                String aux = this.combination.substring(i, i + 1);
-                if (!this.VALID_COLORS.contains(aux)) {
-                    console.out(WRONG_COLORS + "\n");
+        if (this.getCombination().length() == 4) {
+            for (int i = 0; i < this.getCombination().length(); i++) {
+                String aux = this.getCombination().substring(i, i + 1);
+                if (!Message.VALID_COLORS.toString().contains(aux)) {
+                    Message.WRONG_COLORS.writeln();
                     this.valid = false;
                     break;
                 }
             }
         } else {
-            console.out(WRONG_LENGTH + "\n");
+            Message.WRONG_LENGTH.writeln();
             this.valid = false;            
         }
         return this.valid;
@@ -46,14 +40,14 @@ class ProposedCombination extends Combination {
     @Override
     protected void show() {
         GestorIO console = new GestorIO();
-        console.out(this.combination);
+        console.out(this.getCombination());
     }
     
     public String ToString() {
-        return this.combination;
+        return this.getCombination();
     }
 
-    boolean valid() {
+    boolean isValid() {
         return this.valid;
     }
 
